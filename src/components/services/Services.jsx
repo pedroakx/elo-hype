@@ -1,4 +1,5 @@
 import { motion } from "framer-motion";
+import { Link } from "react-router-dom";
 import {
     Gamepad2,
     Users,
@@ -13,37 +14,48 @@ export default function Services(){
 
     const services = [
 
-        {
-            icon:<Gamepad2 size={32}/>,
-            title:"Evolução Gamer",
-            description:
-            "Melhore suas habilidades com acompanhamento, análise e estratégias personalizadas."
-        },
+    {
+        icon: <TrendingUp size={32} />,
+        title: "Elo Boost",
+        description:
+            "Suba de elo com rapidez e segurança utilizando jogadores de alto nível.",
+        link: "/services/elo-boost"
+    },
 
+    {
+        icon: <Users size={32} />,
+        title: "Duo Boost",
+        description:
+            "Jogue ao lado de um booster experiente e evolua enquanto acompanha cada partida.",
+        link: "/services/duo-boost"
+    },
 
-        {
-            icon:<Users size={32}/>,
-            title:"Conexão de Times",
-            description:
-            "Encontre jogadores, equipes e oportunidades dentro do cenário competitivo."
-        },
+    {
+        icon: <Gamepad2 size={32} />,
+        title: "Coaching",
+        description:
+            "Sessões personalizadas para melhorar mecânica, Macro Gaming e visão de jogo.",
+        link: "/services/coaching"
+    },
 
+    {
+        icon: <Gamepad2 size={32} />,
+        title: "Placement",
+        description:
+            "Garanta as melhores partidas de colocação para começar a temporada no elo ideal.",
+        link: "/services/placement"
+    }
 
-        {
-            icon:<TrendingUp size={32}/>,
-            title:"Performance",
-            description:
-            "Acompanhe sua evolução e descubra como alcançar novos níveis."
-        }
-
-    ];
+];
 
 
 
     return(
 
-        <section className={styles.services}>
-
+        <section 
+        id="services"
+        className={styles.services}>
+            
 
             <div className={styles.container}>
 
@@ -165,6 +177,13 @@ export default function Services(){
                                     {service.description}
 
                                 </p>
+
+                                <Link
+                                    to={service.link}
+                                className={styles.button}
+>
+                                 Saiba mais →
+                                </Link>
 
 
 

@@ -1,7 +1,6 @@
 import { motion, AnimatePresence } from "framer-motion";
 import { ArrowRight, Menu, X } from "lucide-react";
 import { useState } from "react";
-
 import styles from "./Navbar.module.css";
 import logo from "../../assets/images/elohypelogo.png";
 
@@ -11,13 +10,28 @@ export default function Navbar() {
   const [open, setOpen] = useState(false);
 
 
-  const links = [
-    "Início",
-    "Serviços",
-    "Jogos",
-    "Como funciona",
-    "Depoimentos"
-  ];
+ const links = [
+    {
+        name:"Início",
+        href:"#"
+    },
+    {
+        name:"Serviços",
+        href:"#services"
+    },
+    {
+        name:"Jogos",
+        href:"#games"
+    },
+    {
+        name:"Como funciona",
+        href:"#how-it-works"
+    },
+    {
+        name:"Depoimentos",
+        href:"#testimonials"
+    }
+];
 
 
   return (
@@ -60,14 +74,21 @@ export default function Navbar() {
         {/* LINKS DESKTOP */}
 
         <div className={styles.links}>
+{
+  links.map(link=>(
 
-          {
-            links.map(link=>(
-              <a href="#" key={link}>
-                {link}
-              </a>
-            ))
-          }
+    <a
+      href={link.href}
+      key={link.name}
+      onClick={()=>setOpen(false)}
+    >
+
+      {link.name}
+
+    </a>
+
+  ))
+}
 
         </div>
 
@@ -135,24 +156,16 @@ export default function Navbar() {
             }}
 
           >
-
-            {
-              links.map(link=>(
-
-                <a
-                  href="#"
-                  key={link}
-                  onClick={()=>setOpen(false)}
-                >
-
-                  {link}
-
-                </a>
-
-              ))
-            }
-
-
+      {
+  links.map(link=>(
+    <a
+      href={link.href}
+      key={link.name}
+    >
+      {link.name}
+    </a>
+  ))
+}
 
             <button className={styles.mobileCTA}>
 
