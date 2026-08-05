@@ -1,0 +1,8 @@
+User-agent: *
+Allow: /
+Disallow: /dashboard
+Disallow: /solicitar
+Disallow: /pagamento
+Disallow: /equipe
+
+Sitemap: https://elohype.com/sitemap.xml

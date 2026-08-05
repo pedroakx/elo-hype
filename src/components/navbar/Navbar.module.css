@@ -112,6 +112,29 @@
     0 0 45px rgba(34,211,238,.45);
 
 }
+.userArea {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.logoutIcon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 42px;
+    height: 42px;
+    border-radius: 12px;
+    color: #A1A1AA;
+    border: 1px solid rgba(255,255,255,.1);
+    transition: .3s;
+}
+
+.logoutIcon:hover {
+    color: white;
+    border-color: rgba(255,255,255,.3);
+}
+
 .mobileButton {
     display:none;
 
@@ -250,6 +273,26 @@
             #7C3AED,
             #22D3EE
         );
+
+    }
+
+    .mobileLogout {
+
+        display:flex;
+
+        justify-content:center;
+
+        align-items:center;
+
+        gap:10px;
+
+        padding:14px;
+
+        border-radius:12px;
+
+        color:#A1A1AA;
+
+        border:1px solid rgba(255,255,255,.1);
 
     }
 

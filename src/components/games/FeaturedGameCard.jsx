@@ -16,6 +16,8 @@ export default function FeaturedGameCard({ game }) {
         src={game.image}
         alt={game.title}
         className={styles.mainImage}
+        loading="lazy"
+        decoding="async"
       />
 
       <div className={styles.overlay} />

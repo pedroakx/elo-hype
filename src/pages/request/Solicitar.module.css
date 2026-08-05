@@ -1,0 +1,259 @@
+.page {
+    position: relative;
+    min-height: 100vh;
+    background: #09090B;
+    padding: 160px 0 120px;
+    overflow: hidden;
+}
+
+.backgroundGlow {
+    position: absolute;
+    top: -200px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 800px;
+    height: 800px;
+    border-radius: 50%;
+    background: radial-gradient(
+        circle,
+        rgba(124,58,237,.22),
+        transparent 70%
+    );
+    filter: blur(60px);
+    pointer-events: none;
+}
+
+.container {
+    position: relative;
+    max-width: 620px;
+    margin: auto;
+    padding: 0 32px;
+}
+
+.header {
+    text-align: center;
+    margin-bottom: 40px;
+}
+
+.badge {
+    color: #22D3EE;
+    font-weight: 600;
+    font-size: 14px;
+    letter-spacing: .5px;
+    text-transform: uppercase;
+}
+
+.header h1 {
+    margin-top: 10px;
+    color: white;
+    font-size: clamp(30px, 4vw, 42px);
+}
+
+.header p {
+    margin-top: 12px;
+    color: #A1A1AA;
+    font-size: 16px;
+}
+
+.formCard {
+    padding: 36px;
+    border-radius: 24px;
+    background: rgba(17,19,28,.75);
+    border: 1px solid rgba(255,255,255,.08);
+    backdrop-filter: blur(20px);
+    display: flex;
+    flex-direction: column;
+    gap: 18px;
+}
+
+.row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 18px;
+}
+
+.select {
+    padding: 12px 14px;
+    border-radius: 12px;
+    background: rgba(9,9,11,.6);
+    border: 1px solid rgba(255,255,255,.1);
+    color: white;
+    font-size: 15px;
+}
+
+.select:focus {
+    outline: none;
+    border-color: rgba(34,211,238,.6);
+}
+
+.textarea {
+    padding: 12px 14px;
+    border-radius: 12px;
+    background: rgba(9,9,11,.6);
+    border: 1px solid rgba(255,255,255,.1);
+    color: white;
+    font-size: 15px;
+    font-family: inherit;
+    resize: vertical;
+}
+
+.textarea:focus {
+    outline: none;
+    border-color: rgba(34,211,238,.6);
+}
+
+.textarea::placeholder {
+    color: #52525B;
+}
+
+.extras {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.extraCard {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    padding: 14px;
+    border-radius: 12px;
+    background: rgba(9,9,11,.5);
+    border: 1px solid rgba(255,255,255,.1);
+    text-align: left;
+    transition: .25s;
+}
+
+.extraCard:hover {
+    border-color: rgba(255,255,255,.25);
+}
+
+.extraSelecionado {
+    background: rgba(124,58,237,.1);
+    border-color: rgba(124,58,237,.5);
+}
+
+.extraCheck {
+    flex-shrink: 0;
+    width: 22px;
+    height: 22px;
+    border-radius: 6px;
+    border: 1px solid rgba(255,255,255,.25);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    background: rgba(255,255,255,.05);
+}
+
+.extraSelecionado .extraCheck {
+    background: linear-gradient(135deg, #7C3AED, #22D3EE);
+    border-color: transparent;
+}
+
+.extraTexto {
+    flex: 1;
+    min-width: 0;
+}
+
+.extraTexto strong {
+    display: block;
+    color: white;
+    font-size: 14px;
+}
+
+.extraTexto p {
+    margin-top: 2px;
+    color: #A1A1AA;
+    font-size: 12px;
+    line-height: 1.4;
+}
+
+.extraPreco {
+    flex-shrink: 0;
+    color: #22D3EE;
+    font-weight: 700;
+    font-size: 13px;
+    white-space: nowrap;
+}
+
+.priceBox {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 18px 20px;
+    border-radius: 14px;
+    background: rgba(124,58,237,.08);
+    border: 1px solid rgba(124,58,237,.25);
+}
+
+.priceBox span {
+    color: #A1A1AA;
+    font-size: 14px;
+}
+
+.priceBox strong {
+    color: #22D3EE;
+    font-size: 22px;
+}
+
+.successCard {
+    position: relative;
+    max-width: 480px;
+    margin: 80px auto 0;
+    padding: 48px 36px;
+    border-radius: 24px;
+    background: rgba(17,19,28,.75);
+    border: 1px solid rgba(255,255,255,.08);
+    backdrop-filter: blur(20px);
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 14px;
+    color: #4ADE80;
+}
+
+.successCard h1 {
+    color: white;
+    font-size: 26px;
+}
+
+.successCard p {
+    color: #A1A1AA;
+    font-size: 15px;
+    margin-bottom: 10px;
+}
+
+@media (max-width: 560px) {
+    .row {
+        grid-template-columns: 1fr;
+    }
+
+    .page {
+        padding: 130px 0 80px;
+    }
+
+    .container {
+        padding: 0 20px;
+    }
+
+    .formCard,
+    .successCard {
+        padding: 24px 20px;
+    }
+
+    .priceBox {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 6px;
+    }
+
+    .extraCard {
+        flex-wrap: wrap;
+    }
+
+    .extraPreco {
+        margin-left: 36px;
+    }
+}

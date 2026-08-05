@@ -8,7 +8,7 @@ const games = [
     title: "League of Legends",
     description:
       "Boost, Duo Boost, Coaching e Partidas de Colocação com jogadores profissionais.",
-    image: "/images/games/lol-banner.png",
+    image: "/images/games/lol-banner.webp",
     badge: "MAIS POPULAR",
     link: "/services/elo-boost"
   },
@@ -17,14 +17,14 @@ const games = [
     title: "Valorant",
     description:
       "Serviços competitivos disponíveis em breve.",
-    image: "/images/games/valorant.png"
+    image: "/images/games/valorant.webp"
   },
 
   {
     title: "Teamfight Tactics",
     description:
       "Boost e Coaching chegando em breve.",
-    image: "/images/games/tft.png"
+    image: "/images/games/tft.webp"
   }
 ];
 

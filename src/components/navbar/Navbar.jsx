@@ -1,13 +1,16 @@
 import { motion, AnimatePresence } from "framer-motion";
-import { ArrowRight, Menu, X } from "lucide-react";
+import { ArrowRight, LayoutDashboard, LogOut, Menu, X } from "lucide-react";
 import { useState } from "react";
+import { Link } from "react-router-dom";
 import styles from "./Navbar.module.css";
 import logo from "../../assets/images/elohypelogo.png";
+import { useAuth } from "../../context/AuthContext";
 
 
 export default function Navbar() {
 
   const [open, setOpen] = useState(false);
+  const { user, signOut } = useAuth();
 
 
  const links = [
@@ -26,10 +29,6 @@ export default function Navbar() {
     {
         name:"Como funciona",
         href:"#how-it-works"
-    },
-    {
-        name:"Depoimentos",
-        href:"#testimonials"
     }
 ];
 
@@ -96,13 +95,29 @@ export default function Navbar() {
 
         {/* BOTÃO DESKTOP */}
 
-        <button className={styles.button}>
+        {
+          user ? (
+            <div className={styles.userArea}>
+              <Link to="/dashboard" className={styles.button}>
+                <LayoutDashboard size={18}/>
+                Dashboard
+              </Link>
 
-          Começar Agora
-
-          <ArrowRight size={18}/>
-
-        </button>
+              <button
+                className={styles.logoutIcon}
+                aria-label="Sair"
+                onClick={signOut}
+              >
+                <LogOut size={18}/>
+              </button>
+            </div>
+          ) : (
+            <Link to="/entrar" className={styles.button}>
+              Entrar
+              <ArrowRight size={18}/>
+            </Link>
+          )
+        }
 
 
 
@@ -110,7 +125,8 @@ export default function Navbar() {
 
         <button
           className={styles.mobileButton}
-          aria-label="Abrir menu"
+          aria-label={open ? "Fechar menu" : "Abrir menu"}
+          aria-expanded={open}
           onClick={()=>setOpen(!open)}
         >
 
@@ -161,19 +177,44 @@ export default function Navbar() {
     <a
       href={link.href}
       key={link.name}
+      onClick={()=>setOpen(false)}
     >
       {link.name}
     </a>
   ))
 }
 
-            <button className={styles.mobileCTA}>
+            {
+              user ? (
+                <>
+                  <Link
+                    to="/dashboard"
+                    className={styles.mobileCTA}
+                    onClick={()=>setOpen(false)}
+                  >
+                    <LayoutDashboard size={18}/>
+                    Dashboard
+                  </Link>
 
-              Começar Agora
-
-              <ArrowRight size={18}/>
-
-            </button>
+                  <button
+                    className={styles.mobileLogout}
+                    onClick={()=>{ setOpen(false); signOut(); }}
+                  >
+                    <LogOut size={18}/>
+                    Sair
+                  </button>
+                </>
+              ) : (
+                <Link
+                  to="/entrar"
+                  className={styles.mobileCTA}
+                  onClick={()=>setOpen(false)}
+                >
+                  Entrar
+                  <ArrowRight size={18}/>
+                </Link>
+              )
+            }
 
 
           </motion.div>

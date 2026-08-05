@@ -14,6 +14,8 @@ export default function GameCard({ game, delay = 0 }) {
       <img
         src={game.image}
         alt={game.title}
+        loading="lazy"
+        decoding="async"
       />
 
       <div className={styles.overlay} />

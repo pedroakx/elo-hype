@@ -279,6 +279,16 @@
 
 
 }
+
+@media(max-width:560px){
+
+.cards {
+
+    grid-template-columns: 1fr;
+
+}
+
+}
 .button {
 
     display:inline-block;
