@@ -1,0 +1,158 @@
+.page {
+    min-height: 100vh;
+    background: #09090B;
+    padding: 160px 0 120px;
+}
+
+.container {
+    max-width: 1000px;
+    margin: auto;
+    padding: 0 32px;
+}
+
+.header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+    gap: 20px;
+    flex-wrap: wrap;
+    margin-bottom: 50px;
+}
+
+.badge {
+    color: #22D3EE;
+    font-weight: 600;
+    font-size: 14px;
+    letter-spacing: .5px;
+    text-transform: uppercase;
+}
+
+.header h1 {
+    margin-top: 10px;
+    color: white;
+    font-size: clamp(28px, 4vw, 38px);
+}
+
+.header p {
+    margin-top: 8px;
+    color: #A1A1AA;
+}
+
+.logout {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 12px 20px;
+    border-radius: 12px;
+    color: #A1A1AA;
+    border: 1px solid rgba(255,255,255,.1);
+    transition: .3s;
+}
+
+.logout:hover {
+    color: white;
+    border-color: rgba(255,255,255,.3);
+}
+
+.state {
+    color: #A1A1AA;
+    text-align: center;
+    padding: 60px 0;
+}
+
+.empty {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 12px;
+    text-align: center;
+    padding: 80px 20px;
+    border-radius: 24px;
+    background: rgba(17,19,28,.5);
+    border: 1px dashed rgba(255,255,255,.1);
+    color: #71717A;
+}
+
+.empty h3 {
+    color: white;
+    font-size: 20px;
+    margin-top: 8px;
+}
+
+.list {
+    display: grid;
+    gap: 20px;
+}
+
+.card {
+    padding: 28px;
+    border-radius: 20px;
+    background: rgba(17,19,28,.75);
+    border: 1px solid rgba(255,255,255,.08);
+    backdrop-filter: blur(20px);
+}
+
+.cardTop {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 12px;
+    flex-wrap: wrap;
+}
+
+.cardTop h3 {
+    color: white;
+    font-size: 19px;
+}
+
+.status {
+    padding: 6px 14px;
+    border-radius: 999px;
+    font-size: 13px;
+    font-weight: 600;
+    white-space: nowrap;
+}
+
+.pendente {
+    color: #FCD34D;
+    background: rgba(252,211,77,.1);
+}
+
+.andamento {
+    color: #22D3EE;
+    background: rgba(34,211,238,.1);
+}
+
+.concluido {
+    color: #4ADE80;
+    background: rgba(74,222,128,.1);
+}
+
+.cancelado {
+    color: #F87171;
+    background: rgba(248,113,113,.1);
+}
+
+.elo {
+    margin-top: 14px;
+    color: #D4D4D8;
+    font-size: 14px;
+}
+
+.elo strong {
+    color: #22D3EE;
+}
+
+.obs {
+    margin-top: 10px;
+    color: #A1A1AA;
+    font-size: 14px;
+    line-height: 1.6;
+}
+
+.date {
+    display: block;
+    margin-top: 18px;
+    color: #52525B;
+    font-size: 13px;
+}

@@ -1,0 +1,78 @@
+.page {
+    position: relative;
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: #09090B;
+    padding: 24px;
+    overflow: hidden;
+}
+
+.backgroundGlow {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 700px;
+    height: 700px;
+    border-radius: 50%;
+    background: radial-gradient(
+        circle,
+        rgba(124,58,237,.2),
+        transparent 70%
+    );
+    filter: blur(60px);
+    pointer-events: none;
+}
+
+.card {
+    position: relative;
+    width: 100%;
+    max-width: 420px;
+    padding: 44px 36px;
+    border-radius: 24px;
+    background: rgba(17,19,28,.75);
+    border: 1px solid rgba(255,255,255,.08);
+    backdrop-filter: blur(20px);
+}
+
+.logoLink {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 24px;
+}
+
+.logo {
+    width: 130px;
+    filter: drop-shadow(0 0 20px rgba(124,58,237,.45));
+}
+
+.card h1 {
+    text-align: center;
+    color: white;
+    font-size: 26px;
+}
+
+.subtitle {
+    margin-top: 8px;
+    text-align: center;
+    color: #A1A1AA;
+    font-size: 15px;
+}
+
+.footer {
+    margin-top: 28px;
+    text-align: center;
+    color: #A1A1AA;
+    font-size: 14px;
+}
+
+.footer a {
+    color: #22D3EE;
+    font-weight: 600;
+}
+
+.footer a:hover {
+    color: #7C3AED;
+}

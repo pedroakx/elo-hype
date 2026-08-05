@@ -1,0 +1,294 @@
+.services {
+
+    padding:120px 0;
+
+    background:#09090B;
+
+}
+
+
+.container {
+
+    max-width:1200px;
+
+    margin:auto;
+
+    padding:0 32px;
+
+}
+
+
+
+.header {
+
+    text-align:center;
+
+    max-width:700px;
+
+    margin:auto;
+
+}
+
+
+
+.header span {
+
+    color:#22D3EE;
+
+    font-weight:600;
+
+}
+
+
+
+.header h2 {
+
+
+    margin-top:15px;
+
+
+    font-size:
+
+    clamp(35px,4vw,55px);
+
+
+    color:white;
+
+}
+
+
+
+.header strong {
+
+    display:block;
+
+    background:
+    linear-gradient(
+        90deg,
+        #7C3AED,
+        #22D3EE
+    );
+
+    background-clip: text;
+    -webkit-background-clip: text;
+
+    color: transparent;
+
+}
+
+
+
+.header p {
+
+
+    margin-top:20px;
+
+
+    color:#A1A1AA;
+
+    font-size:18px;
+
+    line-height:1.6;
+
+}
+
+
+
+
+
+.cards {
+
+
+    margin-top:60px;
+
+
+    display:grid;
+
+
+    grid-template-columns:
+
+    repeat(3,1fr);
+
+
+    gap:25px;
+
+}
+
+
+
+
+
+.card {
+
+
+    padding:35px;
+
+
+    border-radius:24px;
+
+
+    background:
+
+    rgba(17,19,28,.75);
+
+
+    border:
+
+    1px solid rgba(255,255,255,.08);
+
+
+    backdrop-filter:blur(20px);
+
+
+    transition:
+    transform .35s ease,
+    border-color .35s ease,
+    box-shadow .35s ease,
+    background .35s ease;
+
+
+}
+
+
+
+.card:hover {
+
+
+    border-color:
+
+    rgba(34,211,238,.4);
+
+
+    box-shadow:
+
+    0 0 40px rgba(124,58,237,.15);
+
+}
+
+
+
+
+
+.icon {
+
+
+    width:60px;
+
+    height:60px;
+
+
+    border-radius:18px;
+
+
+    display:flex;
+
+    align-items:center;
+
+    justify-content:center;
+
+
+    color:white;
+
+
+    background:
+
+    linear-gradient(
+        135deg,
+        #7C3AED,
+        #22D3EE
+    );
+
+
+    box-shadow:
+
+    0 0 25px rgba(124,58,237,.4);
+
+}
+
+
+
+
+
+.card h3 {
+
+
+    margin-top:25px;
+
+
+    color:white;
+
+
+    font-size:24px;
+
+}
+
+
+
+.card p {
+
+
+    margin-top:15px;
+
+
+    color:#A1A1AA;
+
+
+    line-height:1.7;
+
+}
+
+
+
+
+.button {
+
+    margin-top: 24px;
+
+    display: inline-flex;
+
+    align-items: center;
+
+    gap: 8px;
+
+    color: #22D3EE;
+
+    text-decoration: none;
+
+    font-weight: 600;
+
+    transition: .3s;
+
+}
+
+.button:hover {
+
+    transform: translateX(6px);
+
+    color: #7C3AED;
+
+}
+
+@media(max-width:900px){
+
+
+.cards {
+
+    grid-template-columns: repeat(2,1fr);
+
+}
+
+
+}
+.button {
+
+    display:inline-block;
+
+    margin-top:25px;
+
+    color:#22D3EE;
+
+    text-decoration:none;
+
+    font-weight:600;
+
+}
