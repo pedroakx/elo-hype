@@ -79,6 +79,10 @@ export default function Login() {
           />
         </div>
 
+        <Link to="/recuperar-senha" className={formStyles.esqueceuSenha}>
+          Esqueci minha senha
+        </Link>
+
         <button
           type="submit"
           className={formStyles.submit}

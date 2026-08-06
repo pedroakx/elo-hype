@@ -5,6 +5,7 @@ import Home from "./pages/home/Home";
 import ProtectedRoute from "./components/protectedRoute/ProtectedRoute";
 import StaffRoute from "./components/staffRoute/StaffRoute";
 import PageLoader from "./components/pageLoader/PageLoader";
+import ScrollToTop from "./components/scrollToTop/ScrollToTop";
 
 // Páginas fora da Home só são baixadas pelo navegador quando o
 // visitante realmente navega até elas (code-splitting por rota).
@@ -15,6 +16,8 @@ const Placement = lazy(() => import("./pages/services/Placement"));
 
 const Login = lazy(() => import("./pages/auth/Login"));
 const Cadastro = lazy(() => import("./pages/auth/Cadastro"));
+const RecuperarSenha = lazy(() => import("./pages/auth/RecuperarSenha"));
+const RedefinirSenha = lazy(() => import("./pages/auth/RedefinirSenha"));
 const Dashboard = lazy(() => import("./pages/dashboard/Dashboard"));
 const Solicitar = lazy(() => import("./pages/request/Solicitar"));
 const PagamentoRetorno = lazy(() => import("./pages/request/PagamentoRetorno"));
@@ -30,6 +33,7 @@ const Termos = lazy(() => import("./pages/legal/Termos"));
 function App() {
   return (
     <Suspense fallback={<PageLoader />}>
+      <ScrollToTop />
       <Routes>
         <Route path="/" element={<Home />} />
 
@@ -40,6 +44,8 @@ function App() {
 
         <Route path="/entrar" element={<Login />} />
         <Route path="/cadastro" element={<Cadastro />} />
+        <Route path="/recuperar-senha" element={<RecuperarSenha />} />
+        <Route path="/redefinir-senha" element={<RedefinirSenha />} />
 
         <Route
           path="/dashboard"

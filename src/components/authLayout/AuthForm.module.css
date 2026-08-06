@@ -87,3 +87,16 @@
 .termos a:hover {
     color: #7C3AED;
 }
+
+.esqueceuSenha {
+    align-self: flex-end;
+    margin-top: -8px;
+    color: #71717A;
+    font-size: 13px;
+    font-weight: 600;
+    transition: .3s;
+}
+
+.esqueceuSenha:hover {
+    color: #22D3EE;
+}

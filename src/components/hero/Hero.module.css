@@ -1,7 +1,5 @@
 .hero {
 
-    min-height:100vh;
-
     position:relative;
 
     overflow:hidden;
@@ -14,7 +12,7 @@
     justify-content:center;
 
 
-    padding-top:15px;
+    padding:110px 0 60px;
 
     background:#09090B;
 
@@ -70,7 +68,7 @@
 
     display:flex;
 
-    align-items:flex-start;
+    align-items:center;
 
     justify-content:space-between;
 
@@ -225,6 +223,11 @@
 
 
 .secondary {
+
+
+    display:inline-flex;
+
+    align-items:center;
 
 
     padding:15px 28px;

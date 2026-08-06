@@ -102,21 +102,21 @@ export default function Hero(){
                     <div className={styles.actions}>
 
 
-                        <button className={styles.primary}>
+                        <a href="#services" className={styles.primary}>
 
                             Começar Agora
 
                             <ArrowRight size={18}/>
 
-                        </button>
+                        </a>
 
 
 
-                        <button className={styles.secondary}>
+                        <a href="#how-it-works" className={styles.secondary}>
 
                             Conhecer a plataforma
 
-                        </button>
+                        </a>
 
 
                     </div>
