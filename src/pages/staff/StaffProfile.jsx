@@ -16,7 +16,7 @@ export default function StaffProfile() {
   const { user, profile, refreshProfile } = useAuth();
   const fileInputRef = useRef(null);
 
-  const [nickname, setNickname] = useState(profile?.nickname || "");
+  const [nickname, setNickname] = useState(profile?.nome);
   const [discord, setDiscord] = useState(profile?.discord || "");
   const [nickLol, setNickLol] = useState(profile?.nick_lol || "");
   const [eloPeak, setEloPeak] = useState(profile?.elo_peak || "");
@@ -80,7 +80,7 @@ export default function StaffProfile() {
     const { error } = await supabase
       .from("profiles")
       .update({
-        nickname: nickname || null,
+        nome:  nickname || null,
         discord: discord || null,
         nick_lol: nickLol || null,
         elo_peak: eloPeak || null

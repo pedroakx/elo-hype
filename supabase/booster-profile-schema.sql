@@ -4,7 +4,7 @@
 
 -- 1. Novos campos no perfil
 alter table public.profiles
-  add column if not exists nickname text,
+  add column if not exists nome text,
   add column if not exists discord text,
   add column if not exists nick_lol text,
   add column if not exists elo_peak text,
@@ -68,18 +68,18 @@ create policy "Fotos de perfil são públicas para leitura"
   for select
   using (bucket_id = 'avatars');
 
--- 6. Atualiza a função de ranking pra também trazer nickname e foto
+-- 6. Atualiza a função de ranking pra também trazer nome e foto
 create or replace function public.get_ranking_boosters()
 returns table(
   nome text,
   nivel integer,
   pedidos_concluidos integer,
   percentual_comissao numeric,
-  nickname text,
+  nomext,
   avatar_url text
 ) as $$
   select p.nome, p.nivel, p.pedidos_concluidos, p.percentual_comissao,
-         p.nickname, p.avatar_url
+         p.nome, p.avatar_url
   from public.profiles p
   where p.role in ('booster', 'admin')
     and exists (
