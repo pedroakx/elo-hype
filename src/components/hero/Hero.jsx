@@ -18,13 +18,13 @@ export default function Hero(){
         {
             icon:<Users size={22}/>,
             number:"50+",
-            text:"Times atendidos"
+            text:"Contas atendidas"
         },
 
         {
             icon:<Zap size={22}/>,
             number:"24/7",
-            text:"Suporte gamer"
+            text:"Suporte total"
         }
     ];
 
@@ -67,7 +67,7 @@ export default function Hero(){
 
                     <span className={styles.badge}>
 
-                        🚀 A nova era dos gamers
+                        🚀 A nova era do bosting
 
                     </span>
 
@@ -87,13 +87,12 @@ export default function Hero(){
 
                     <p className={styles.description}> 
 
-                        A Elo Hype conecta jogadores,
-                        equipes e oportunidades dentro
-                        do universo competitivo.
+                        A Elo Hype conecta jogadores e
+                        boosters para a experiência
+                        definitiva do Elo Boosting.
 
-                        Melhore sua performance,
-                        encontre seu time e destaque
-                        seu talento.
+                        Melhore sua performance e se destaque
+                        dentre os demais.
 
                     </p>
 
