@@ -58,7 +58,7 @@ export default function Navbar() {
 
         {/* LOGO */}
 
-        <div className={styles.logoArea}>
+        <Link to="/" className={styles.logoArea}>
 
           <img
             src={logo}
@@ -66,7 +66,7 @@ export default function Navbar() {
             className={styles.logo}
           />
 
-        </div>
+        </Link>
 
 
 

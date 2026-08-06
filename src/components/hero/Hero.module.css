@@ -24,6 +24,11 @@
 .backgroundGlow {
 
 
+    position:absolute;
+
+    pointer-events:none;
+
+
     animation: floatGlow 8s infinite alternate;
 
     width:600px;
