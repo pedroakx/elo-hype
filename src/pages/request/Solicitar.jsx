@@ -80,6 +80,28 @@ export default function Solicitar() {
   const precoIndisponivel = ordemValida && !preco;
 
   async function handleSubmit(e) {
+    async function handleSubmit(e) {
+  e.preventDefault();
+
+  console.log("===== TESTE DE AUTENTICAÇÃO =====");
+
+  console.log("Usuário do AuthContext:", user);
+
+  const {
+    data: { session },
+    error: sessionError,
+  } = await supabase.auth.getSession();
+
+  console.log("Sessão Supabase:", session);
+
+  console.log("Erro da sessão:", sessionError);
+
+  console.log("=================================");
+
+
+  // Impede o envio por enquanto
+  return;
+}
     e.preventDefault();
     setError(null);
 
