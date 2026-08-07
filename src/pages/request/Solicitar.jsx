@@ -3,7 +3,7 @@ import { useSearchParams } from "react-router-dom";
 import { motion } from "framer-motion";
 import { Send, Check } from "lucide-react";
 
-import Navbar from "../../components/navbar/Navbar";
+
 import Footer from "../../components/footer/Footer";
 import { useAuth } from "../../context/AuthContext";
 import { supabase } from "../../lib/supabaseClient";
@@ -155,7 +155,7 @@ export default function Solicitar() {
 
   return (
     <>
-      <Navbar />
+   
 
       <main className={styles.page}>
 

@@ -12,19 +12,19 @@ export default function Hero(){
         {
             icon:<Trophy size={22}/>,
             number:"500+",
-            text:"Jogadores evoluídos"
+            text:"Jogadores atendidos"
         },
 
         {
             icon:<Users size={22}/>,
             number:"50+",
-            text:"Times atendidos"
+            text:"Contas evoluidas"
         },
 
         {
             icon:<Zap size={22}/>,
             number:"24/7",
-            text:"Suporte gamer"
+            text:"Suporte total"
         }
     ];
 
@@ -67,7 +67,7 @@ export default function Hero(){
 
                     <span className={styles.badge}>
 
-                        🚀 A nova era dos gamers
+                        🚀 A nova era do boosting
 
                     </span>
 
@@ -75,10 +75,10 @@ export default function Hero(){
 
                     <h1 className={styles.title}>
 
-    Evolua seu jogo.
+    Evolua sua conta.
 
     <span>
-        Domine o próximo nível.
+        Conquiste o próximo elo.
     </span>
 
 </h1>
@@ -87,13 +87,12 @@ export default function Hero(){
 
                     <p className={styles.description}> 
 
-                        A Elo Hype conecta jogadores,
-                        equipes e oportunidades dentro
-                        do universo competitivo.
+                        A Elo Hype conecta jogadores e
+                        bosters diretamente, gerando a 
+                        melhor experiência pro usuário.
 
-                        Melhore sua performance,
-                        encontre seu time e destaque
-                        seu talento.
+                        Melhore seu elo e se destaque
+                        dentre os demais.
 
                     </p>
 

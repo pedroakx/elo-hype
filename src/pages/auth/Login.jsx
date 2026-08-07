@@ -25,7 +25,9 @@ export default function Login() {
     setError(null);
     setLoading(true);
 
+    
     const { error } = await signIn({ email, password });
+    
 
     setLoading(false);
 

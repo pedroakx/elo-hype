@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { LogOut, PackageOpen, MessageCircle } from "lucide-react";
 
-import Navbar from "../../components/navbar/Navbar";
+
 import Footer from "../../components/footer/Footer";
 import ChatPedido from "../../components/chatPedido/ChatPedido";
 import { useAuth } from "../../context/AuthContext";
@@ -65,7 +65,7 @@ export default function Dashboard() {
 
   return (
     <>
-      <Navbar />
+   
 
       <main className={styles.page}>
         <div className={styles.container}>

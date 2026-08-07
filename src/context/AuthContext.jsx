@@ -31,15 +31,20 @@ export function AuthProvider({ children }) {
     return () => subscription.unsubscribe();
   }, []);
 
-  async function loadProfile(userId) {
-    const { data } = await supabase
-      .from("profiles")
-      .select("*")
-      .eq("id", userId)
-      .single();
+ async function loadProfile(userId) {
+  const { data, error } = await supabase
+    .from("profiles")
+    .select("*")
+    .eq("id", userId)
+    .single();
 
-    setProfile(data ?? null);
-  }
+  console.log("LOAD PROFILE:", {
+    data,
+    error
+  });
+
+  setProfile(data ?? null);
+}
 
   async function signUp({ email, password, nome }) {
     const { data, error } = await supabase.auth.signUp({

@@ -3,7 +3,7 @@ import { useNavigate, useSearchParams, Link } from "react-router-dom";
 import { motion } from "framer-motion";
 import { CheckCircle2, Clock, XCircle } from "lucide-react";
 
-import Navbar from "../../components/navbar/Navbar";
+
 import Footer from "../../components/footer/Footer";
 import { useDocumentTitle } from "../../hooks/useDocumentTitle";
 import formStyles from "../../components/authLayout/AuthForm.module.css";
@@ -61,7 +61,7 @@ export default function PagamentoRetorno() {
 
   return (
     <>
-      <Navbar />
+      
 
       <main className={styles.page}>
         <div className={styles.backgroundGlow}></div>

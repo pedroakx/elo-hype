@@ -2,7 +2,6 @@ import { motion } from "framer-motion";
 import { ArrowRight, Check } from "lucide-react";
 import { Link } from "react-router-dom";
 
-import Navbar from "../navbar/Navbar";
 import Footer from "../footer/Footer";
 import { useDocumentTitle } from "../../hooks/useDocumentTitle";
 import styles from "./ServicePage.module.css";
@@ -20,8 +19,7 @@ export default function ServicePage({
 
   return (
     <>
-      <Navbar />
-
+     
       <main className={styles.page}>
 
         <div className={styles.backgroundGlow}></div>

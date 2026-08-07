@@ -3,7 +3,15 @@ import { useAuth } from "../../context/AuthContext";
 import styles from "../protectedRoute/ProtectedRoute.module.css";
 
 export default function StaffRoute({ children }) {
-  const { user, role, loading } = useAuth();
+  
+ const { user, role, profile, loading } = useAuth();
+
+console.log("STAFF AUTH:", {
+  user,
+  role,
+  profile,
+  loading
+});
   const location = useLocation();
 
   if (loading) {

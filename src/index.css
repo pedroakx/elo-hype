@@ -87,3 +87,11 @@ img {
     display:block;
 
 }
+
+:root {
+  --navbar-height: 86px;
+}
+
+.app-content {
+  padding-top: 0;
+}

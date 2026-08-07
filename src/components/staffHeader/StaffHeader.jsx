@@ -1,21 +1,23 @@
 import { LogOut, Trophy, User } from "lucide-react";
 import { Link } from "react-router-dom";
-import logo from "../../assets/images/elohypelogo.png";
 import { useAuth } from "../../context/AuthContext";
 import styles from "./StaffHeader.module.css";
+import logo from "../../assets/images/elohypelogo.png";
 
 export default function StaffHeader() {
   const { profile, signOut } = useAuth();
 
   return (
     <header className={styles.header}>
-      <div className={styles.container}>
+       <div className={styles.container}>
 
-        <div className={styles.brand}>
-          <img src={logo} alt="Elo Hype" className={styles.logo} />
-          <span className={styles.badge}>Área da equipe</span>
-        </div>
-
+       
+     <div className={styles.brand}>
+  <img 
+    src={logo} 
+    alt="Elo Hype" 
+    className={styles.logo} 
+  /></div>
         <nav className={styles.nav}>
           <Link to="/equipe/painel" className={styles.navLink}>Pedidos</Link>
           <Link to="/equipe/ranking" className={styles.navLink}>
