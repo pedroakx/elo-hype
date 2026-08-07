@@ -1,13 +1,14 @@
 import { Suspense, lazy } from "react";
-import { Routes, Route } from "react-router-dom";
+import { Routes, Route, useLocation } from "react-router-dom";
 
 import Navbar from "./components/navbar/Navbar";
-import Home from "./pages/home/Home";
 import ProtectedRoute from "./components/protectedRoute/ProtectedRoute";
 import StaffRoute from "./components/staffRoute/StaffRoute";
 import PageLoader from "./components/pageLoader/PageLoader";
 import ScrollToTop from "./components/scrollToTop/ScrollToTop";
-import { useLocation } from "react-router-dom";
+
+// Páginas públicas
+import Home from "./pages/home/Home";
 
 // Serviços
 const EloBoost = lazy(() => import("./pages/services/EloBoost"));
@@ -21,10 +22,12 @@ const Cadastro = lazy(() => import("./pages/auth/Cadastro"));
 const RecuperarSenha = lazy(() => import("./pages/auth/RecuperarSenha"));
 const RedefinirSenha = lazy(() => import("./pages/auth/RedefinirSenha"));
 
-// Usuário
+// Cliente
 const Dashboard = lazy(() => import("./pages/dashboard/Dashboard"));
 const Solicitar = lazy(() => import("./pages/request/Solicitar"));
-const PagamentoRetorno = lazy(() => import("./pages/request/PagamentoRetorno"));
+const PagamentoRetorno = lazy(() =>
+  import("./pages/request/PagamentoRetorno")
+);
 
 // Staff
 const StaffLogin = lazy(() => import("./pages/staff/StaffLogin"));
@@ -41,30 +44,67 @@ function App() {
   const location = useLocation();
 
   const isStaffArea = location.pathname.startsWith("/equipe");
+
+
   return (
     <>
       {!isStaffArea && <Navbar />}
 
-      <main className="app-content">
-        <Suspense fallback={<PageLoader />}>
-          <ScrollToTop />
+      <main className={!isStaffArea ? "app-content" : ""}>
+        <ScrollToTop />
 
+        <Suspense fallback={<PageLoader />}>
           <Routes>
 
+            {/* Home */}
             <Route path="/" element={<Home />} />
 
-            <Route path="/services/elo-boost" element={<EloBoost />} />
-            <Route path="/services/duo-boost" element={<DuoBoost />} />
-            <Route path="/services/coaching" element={<Coaching />} />
-            <Route path="/services/placement" element={<Placement />} />
+
+            {/* Serviços */}
+            <Route
+              path="/services/elo-boost"
+              element={<EloBoost />}
+            />
+
+            <Route
+              path="/services/duo-boost"
+              element={<DuoBoost />}
+            />
+
+            <Route
+              path="/services/coaching"
+              element={<Coaching />}
+            />
+
+            <Route
+              path="/services/placement"
+              element={<Placement />}
+            />
 
 
-            <Route path="/entrar" element={<Login />} />
-            <Route path="/cadastro" element={<Cadastro />} />
-            <Route path="/recuperar-senha" element={<RecuperarSenha />} />
-            <Route path="/redefinir-senha" element={<RedefinirSenha />} />
+            {/* Auth */}
+            <Route
+              path="/entrar"
+              element={<Login />}
+            />
+
+            <Route
+              path="/cadastro"
+              element={<Cadastro />}
+            />
+
+            <Route
+              path="/recuperar-senha"
+              element={<RecuperarSenha />}
+            />
+
+            <Route
+              path="/redefinir-senha"
+              element={<RedefinirSenha />}
+            />
 
 
+            {/* Cliente */}
             <Route
               path="/dashboard"
               element={
@@ -95,7 +135,11 @@ function App() {
             />
 
 
-            <Route path="/equipe/entrar" element={<StaffLogin />} />
+            {/* Staff */}
+            <Route
+              path="/equipe/entrar"
+              element={<StaffLogin />}
+            />
 
 
             <Route
@@ -128,12 +172,20 @@ function App() {
             />
 
 
-            <Route path="/termos" element={<Termos />} />
+            {/* Legal */}
+            <Route
+              path="/termos"
+              element={<Termos />}
+            />
 
-            <Route path="*" element={<NotFound />} />
+
+            {/* 404 */}
+            <Route
+              path="*"
+              element={<NotFound />}
+            />
 
           </Routes>
-
         </Suspense>
       </main>
     </>
