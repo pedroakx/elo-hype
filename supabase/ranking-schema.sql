@@ -99,7 +99,9 @@ grant execute on function public.get_ranking_boosters() to authenticated;
 --    (importante rodar de novo se você mudar os números do calcular_nivel
 --    depois que alguns boosters já tiverem pedidos concluídos)
 update public.profiles p
-set nivel = c.nivel,
-    percentual_comissao = case when p.role = 'admin' then 90.00 else c.percentual end
-from lateral public.calcular_nivel(p.pedidos_concluidos) c
+set nivel = (select nivel from public.calcular_nivel(p.pedidos_concluidos)),
+    percentual_comissao = case
+      when p.role = 'admin' then 90.00
+      else (select percentual from public.calcular_nivel(p.pedidos_concluidos))
+    end
 where p.role in ('booster', 'admin');

@@ -24,7 +24,7 @@ No painel do Supabase → **SQL Editor**, rode os arquivos de `supabase/*.sql`
 5. `supabase/ranking-schema.sql` — níveis, comissão e ranking dos boosters
 6. `supabase/security-schema.sql` — move o cálculo de preço para o servidor
 7. `supabase/chat-schema.sql` — chat entre cliente e booster
-8. `supabase/booster-profile-schema.sql` — perfil do booster (nome
+8. `supabase/booster-profile-schema.sql` — perfil do booster (nickname,
    Discord, nick do LoL, elo peak, foto)
 9. `supabase/extras-schema.sql` — serviços extras (add-ons) no pedido
 

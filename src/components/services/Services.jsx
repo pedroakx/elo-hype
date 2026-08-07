@@ -90,7 +90,7 @@ export default function Services(){
                         Tudo que você precisa
 
                         <strong>
-                            para evoluir sua conta
+                            para evoluir
                         </strong>
 
                     </h2>
@@ -98,8 +98,9 @@ export default function Services(){
 
                     <p>
 
-                        Uma plataforma criada para facilitar e
-                        desenvolver sua conta de forma prática e rápida.
+                        Uma plataforma criada para conectar,
+                        desenvolver e destacar jogadores
+                        dentro do universo gamer.
 
                     </p>
 

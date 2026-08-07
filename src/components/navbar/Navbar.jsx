@@ -16,19 +16,19 @@ export default function Navbar() {
  const links = [
     {
         name:"Início",
-        href:"#"
+        href:"/"
     },
     {
         name:"Serviços",
-        href:"#services"
+        href:"/#services"
     },
     {
         name:"Jogos",
-        href:"#games"
+        href:"/#games"
     },
     {
         name:"Como funciona",
-        href:"#how-it-works"
+        href:"/#how-it-works"
     }
 ];
 
@@ -76,15 +76,15 @@ export default function Navbar() {
 {
   links.map(link=>(
 
-    <a
-      href={link.href}
+    <Link
+      to={link.href}
       key={link.name}
       onClick={()=>setOpen(false)}
     >
 
       {link.name}
 
-    </a>
+    </Link>
 
   ))
 }
@@ -174,13 +174,13 @@ export default function Navbar() {
           >
       {
   links.map(link=>(
-    <a
-      href={link.href}
+    <Link
+      to={link.href}
       key={link.name}
       onClick={()=>setOpen(false)}
     >
       {link.name}
-    </a>
+    </Link>
   ))
 }
 
