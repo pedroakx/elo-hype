@@ -82,7 +82,7 @@ export default function Termos() {
             <ul>
               <li>Nome e e-mail, no cadastro da conta</li>
               <li>Dados de pagamento, processados diretamente pelo Mercado Pago — não armazenamos número de cartão em nossos servidores</li>
-              <li>Nickname, Discord e nick da conta de LoL, se você for um booster e optar por preencher seu perfil</li>
+              <li>Nomeiscord e nick da conta de LoL, se você for um booster e optar por preencher seu perfil</li>
               <li>Mensagens trocadas no chat entre cliente e booster, vinculadas ao pedido correspondente</li>
             </ul>
           </section>
