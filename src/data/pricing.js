@@ -58,7 +58,6 @@ const PRECOS_POR_ETAPA = ELOS.slice(0, -1).map((elo, i) => {
   if (elo === "Diamante I" && proximoElo === "Mestre") return PRECO_DIAMANTE_I_PARA_MESTRE;
   if (elo === "Mestre" && proximoElo === "Grão-Mestre") return PRECO_MESTRE_PARA_GRAO_MESTRE;
   if (elo === "Grão-Mestre" && proximoElo === "Desafiante") return PRECO_GRAO_MESTRE_PARA_DESAFIANTE;
-
   // Entrando no Diamante vindo do Esmeralda I: usa o preço do primeiro
   // degrau do Diamante (mesma regra: o degrau usa o preço do elo de chegada)
   if (proximoElo === "Diamante IV") return PRECO_DIAMANTE_IV_PARA_III;
