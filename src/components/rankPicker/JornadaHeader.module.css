@@ -1,0 +1,50 @@
+.jornada {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 28px;
+    padding: 32px 20px;
+    margin-bottom: 8px;
+}
+
+.lado {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
+}
+
+.rotulo {
+    color: #71717A;
+    font-size: 12px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: .8px;
+}
+
+.rotuloDesejado {
+    color: #22D3EE;
+}
+
+.eloNome {
+    color: white;
+    font-size: 16px;
+}
+
+.meio {
+    display: flex;
+    align-items: center;
+    color: #52525B;
+    padding-bottom: 30px;
+}
+
+@media (max-width: 560px) {
+    .jornada {
+        gap: 14px;
+        padding: 24px 8px;
+    }
+
+    .meio {
+        padding-bottom: 44px;
+    }
+}

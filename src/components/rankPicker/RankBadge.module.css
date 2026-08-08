@@ -1,0 +1,95 @@
+.badge {
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 16px;
+    background: rgba(17,19,28,.7);
+    border: 1px solid rgba(255,255,255,.08);
+    transition: transform .2s ease, border-color .2s ease;
+}
+
+.icon {
+    position: relative;
+    z-index: 1;
+    color: var(--cor);
+    filter: drop-shadow(0 0 6px color-mix(in srgb, var(--cor) 70%, transparent));
+}
+
+.glow {
+    position: absolute;
+    inset: 8%;
+    border-radius: 50%;
+    background: radial-gradient(circle, color-mix(in srgb, var(--cor) 55%, transparent), transparent 72%);
+    filter: blur(6px);
+    opacity: .6;
+    transition: opacity .2s ease;
+}
+
+/* Tamanhos */
+.sm {
+    width: 72px;
+    height: 72px;
+}
+.sm .icon {
+    width: 30px;
+    height: 30px;
+}
+
+.lg {
+    width: 130px;
+    height: 130px;
+    border-radius: 28px;
+}
+.lg .icon {
+    width: 56px;
+    height: 56px;
+}
+.lg .glow {
+    filter: blur(16px);
+    opacity: .8;
+}
+
+button.badge {
+    cursor: pointer;
+}
+
+button.badge:hover {
+    transform: translateY(-2px);
+    border-color: color-mix(in srgb, var(--cor) 50%, transparent);
+}
+
+.selected {
+    border-color: var(--cor);
+    background: color-mix(in srgb, var(--cor) 14%, rgba(17,19,28,.7));
+    box-shadow: 0 0 24px color-mix(in srgb, var(--cor) 35%, transparent);
+}
+
+.dimmed {
+    opacity: .45;
+}
+
+.dimmed .glow {
+    opacity: .25;
+}
+
+@media (max-width: 420px) {
+    .sm {
+        width: 46px;
+        height: 46px;
+        border-radius: 12px;
+    }
+    .sm .icon {
+        width: 20px;
+        height: 20px;
+    }
+
+    .lg {
+        width: 96px;
+        height: 96px;
+    }
+    .lg .icon {
+        width: 42px;
+        height: 42px;
+    }
+}

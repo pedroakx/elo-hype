@@ -5,6 +5,8 @@ import { Send, Check } from "lucide-react";
 
 
 import Footer from "../../components/footer/Footer";
+import RankPicker from "../../components/rankPicker/RankPicker";
+import JornadaHeader from "../../components/rankPicker/JornadaHeader";
 import { useAuth } from "../../context/AuthContext";
 import { supabase } from "../../lib/supabaseClient";
 import { ELOS, calcularPreco, indiceDoElo, extrasDisponiveis, calcularTotalComExtras, EXTRAS } from "../../data/pricing";
@@ -201,35 +203,14 @@ export default function Solicitar() {
             </div>
 
             {USA_ELO(servico) && (
-              <div className={styles.row}>
-                <div className={formStyles.field}>
-                  <label htmlFor="eloAtual">Elo atual</label>
-                  <select
-                    id="eloAtual"
-                    className={styles.select}
-                    value={eloAtual}
-                    onChange={(e) => setEloAtual(e.target.value)}
-                  >
-                    {ELOS.map((elo) => (
-                      <option key={elo} value={elo}>{elo}</option>
-                    ))}
-                  </select>
-                </div>
+              <>
+                <JornadaHeader eloAtual={eloAtual} eloDesejado={eloDesejado} />
 
-                <div className={formStyles.field}>
-                  <label htmlFor="eloDesejado">Elo desejado</label>
-                  <select
-                    id="eloDesejado"
-                    className={styles.select}
-                    value={eloDesejado}
-                    onChange={(e) => setEloDesejado(e.target.value)}
-                  >
-                    {ELOS.map((elo) => (
-                      <option key={elo} value={elo}>{elo}</option>
-                    ))}
-                  </select>
+                <div className={styles.row}>
+                  <RankPicker label="Elo atual" value={eloAtual} onChange={setEloAtual} />
+                  <RankPicker label="Elo desejado" value={eloDesejado} onChange={setEloDesejado} />
                 </div>
-              </div>
+              </>
             )}
 
             {USA_ELO(servico) && (
