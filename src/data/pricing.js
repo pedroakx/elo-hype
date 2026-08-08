@@ -21,24 +21,29 @@ export function indiceDoElo(elo) {
 }
 
 // ==========================================================================
-// PREÇOS — tabela oficial do Elo Boost (preço pra subir o tier inteiro,
-// de IV até I -- 3 divisões). Duo Boost usa a mesma base + um adicional.
+// PREÇOS — tabela oficial, preço POR DIVISÃO (não por tier inteiro).
 // ==========================================================================
 
-const PRECO_TIER_COMPLETO = {
-  "Ferro": 40,
-  "Bronze": 45,
-  "Prata": 55,
-  "Ouro": 70,
-  "Platina": 100,
-  "Esmeralda": 190,
-  "Diamante": 310
+// Preço fixo por divisão dentro do tier (Ferro a Esmeralda têm valor único;
+// a entrada em um tier novo usa o preço do tier de destino)
+const PRECO_POR_DIVISAO = {
+  "Ferro": 13,
+  "Bronze": 15,
+  "Prata": 17,
+  "Ouro": 20,
+  "Platina": 25,
+  "Esmeralda": 40
 };
 
-// Preço de cada etapa especial que não tem divisão (fora do padrão "por tier")
-const PRECO_DIAMANTE_I_PARA_MESTRE = 140;
+// Diamante tem preço específico por degrau (fica cada vez mais caro
+// conforme se aproxima do Mestre)
+const PRECO_DIAMANTE_IV_PARA_III = 60;
+const PRECO_DIAMANTE_III_PARA_II = 70;
+const PRECO_DIAMANTE_II_PARA_I = 80;
+const PRECO_DIAMANTE_I_PARA_MESTRE = 100;
+
 const PRECO_MESTRE_PARA_GRAO_MESTRE = 1300;
-// Grão-Mestre -> Desafiante: sem valor definido, tratado como "sob consulta"
+const PRECO_GRAO_MESTRE_PARA_DESAFIANTE = 5000;
 
 const MULTIPLICADOR_DUO_BOOST = 1.65; // +65% sobre o Elo Boost
 
@@ -47,34 +52,40 @@ const MULTIPLICADOR_DUO_BOOST = 1.65; // +65% sobre o Elo Boost
 const PRECOS_POR_ETAPA = ELOS.slice(0, -1).map((elo, i) => {
   const proximoElo = ELOS[i + 1];
 
-  if (elo === "Diamante I" && proximoElo === "Mestre") {
-    return PRECO_DIAMANTE_I_PARA_MESTRE;
-  }
+  if (elo === "Diamante IV" && proximoElo === "Diamante III") return PRECO_DIAMANTE_IV_PARA_III;
+  if (elo === "Diamante III" && proximoElo === "Diamante II") return PRECO_DIAMANTE_III_PARA_II;
+  if (elo === "Diamante II" && proximoElo === "Diamante I") return PRECO_DIAMANTE_II_PARA_I;
+  if (elo === "Diamante I" && proximoElo === "Mestre") return PRECO_DIAMANTE_I_PARA_MESTRE;
+  if (elo === "Mestre" && proximoElo === "Grão-Mestre") return PRECO_MESTRE_PARA_GRAO_MESTRE;
+  if (elo === "Grão-Mestre" && proximoElo === "Desafiante") return PRECO_GRAO_MESTRE_PARA_DESAFIANTE;
 
-  if (elo === "Mestre" && proximoElo === "Grão-Mestre") {
-    return PRECO_MESTRE_PARA_GRAO_MESTRE;
-  }
-
-  if (elo === "Grão-Mestre" && proximoElo === "Desafiante") {
-    return 5000;
-  }
+  // Entrando no Diamante vindo do Esmeralda I: usa o preço do primeiro
+  // degrau do Diamante (mesma regra: o degrau usa o preço do elo de chegada)
+  if (proximoElo === "Diamante IV") return PRECO_DIAMANTE_IV_PARA_III;
 
   // Dentro de um tier com divisão (ex: Ferro IV -> Ferro III) ou entrando
-  // num tier novo (ex: Ferro I -> Bronze IV): usa o preço do tier de destino,
-  // dividido pelas 3 etapas que compõem a subida completa do tier.
+  // num tier novo (ex: Ferro I -> Bronze IV): usa o preço por divisão do
+  // tier de destino
   const [tierDestino] = proximoElo.split(" ");
-  const totalTier = PRECO_TIER_COMPLETO[tierDestino];
-
-  return totalTier ? totalTier / 3 : null;
+  return PRECO_POR_DIVISAO[tierDestino] ?? null;
 });
 
-function precoEloBoost(indiceAtual, indiceDesejado) {
+// Calcula o preço do Elo Boost/Duo Boost considerando os LPs já feitos
+// na divisão atual — o primeiro degrau é cobrado proporcional ao que
+// ainda falta (100 - lpAtual)%, os degraus seguintes são cobrados inteiros.
+function precoEloBoost(indiceAtual, indiceDesejado, lpAtual) {
   let total = 0;
 
   for (let i = indiceAtual; i < indiceDesejado; i++) {
     const etapa = PRECOS_POR_ETAPA[i];
-    if (etapa == null) return null; // trecho sob consulta
-    total += etapa;
+    if (etapa == null) return null; // trecho sem preço definido
+
+    if (i === indiceAtual) {
+      const lp = Math.min(Math.max(Number(lpAtual) || 0, 0), 99);
+      total += etapa * (100 - lp) / 100;
+    } else {
+      total += etapa;
+    }
   }
 
   return total; // sem arredondar aqui — o arredondamento final acontece
@@ -87,7 +98,7 @@ export const PRECO_POR_UNIDADE = {
   placement: 25
 };
 
-export function calcularPreco({ servico, eloAtual, eloDesejado, quantidade }) {
+export function calcularPreco({ servico, eloAtual, eloDesejado, lpAtual, quantidade }) {
   if (servico === "elo-boost" || servico === "duo-boost") {
     const indiceAtual = indiceDoElo(eloAtual);
     const indiceDesejado = indiceDoElo(eloDesejado);
@@ -95,7 +106,7 @@ export function calcularPreco({ servico, eloAtual, eloDesejado, quantidade }) {
     if (indiceAtual === -1 || indiceDesejado === -1) return null;
     if (indiceDesejado <= indiceAtual) return null;
 
-    const base = precoEloBoost(indiceAtual, indiceDesejado);
+    const base = precoEloBoost(indiceAtual, indiceDesejado, lpAtual);
     if (base == null) return null;
 
     const bruto = servico === "duo-boost" ? base * MULTIPLICADOR_DUO_BOOST : base;

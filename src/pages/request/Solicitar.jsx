@@ -35,6 +35,7 @@ export default function Solicitar() {
   const [servico, setServico] = useState(servicoInicial);
   const [eloAtual, setEloAtual] = useState(ELOS[0]);
   const [eloDesejado, setEloDesejado] = useState(ELOS[1]);
+  const [lpAtual, setLpAtual] = useState(0);
   const [quantidade, setQuantidade] = useState(5);
   const [observacoes, setObservacoes] = useState("");
   const [extrasSelecionados, setExtrasSelecionados] = useState([]);
@@ -68,8 +69,9 @@ export default function Solicitar() {
     servico,
     eloAtual,
     eloDesejado,
+    lpAtual,
     quantidade
-  }), [servico, eloAtual, eloDesejado, quantidade]);
+  }), [servico, eloAtual, eloDesejado, lpAtual, quantidade]);
 
   const preco = useMemo(
     () => calcularTotalComExtras(precoBase, extrasSelecionados),
@@ -80,28 +82,6 @@ export default function Solicitar() {
   const precoIndisponivel = ordemValida && !preco;
 
   async function handleSubmit(e) {
-    async function handleSubmit(e) {
-  e.preventDefault();
-
-  console.log("===== TESTE DE AUTENTICAÇÃO =====");
-
-  console.log("Usuário do AuthContext:", user);
-
-  const {
-    data: { session },
-    error: sessionError,
-  } = await supabase.auth.getSession();
-
-  console.log("Sessão Supabase:", session);
-
-  console.log("Erro da sessão:", sessionError);
-
-  console.log("=================================");
-
-
-  // Impede o envio por enquanto
-  return;
-}
     e.preventDefault();
     setError(null);
 
@@ -129,6 +109,7 @@ export default function Solicitar() {
         servico,
         elo_atual: USA_ELO(servico) ? eloAtual : null,
         elo_desejado: USA_ELO(servico) ? eloDesejado : null,
+        lp_atual: USA_ELO(servico) ? Number(lpAtual) : null,
         quantidade: USA_QUANTIDADE(servico) ? Number(quantidade) : null,
         observacoes: observacoes || null,
         extras: extrasSelecionados
@@ -248,6 +229,20 @@ export default function Solicitar() {
                     ))}
                   </select>
                 </div>
+              </div>
+            )}
+
+            {USA_ELO(servico) && (
+              <div className={formStyles.field}>
+                <label htmlFor="lpAtual">LP atuais na divisão (0 a 99)</label>
+                <input
+                  id="lpAtual"
+                  type="number"
+                  min="0"
+                  max="99"
+                  value={lpAtual}
+                  onChange={(e) => setLpAtual(e.target.value)}
+                />
               </div>
             )}
 

@@ -1,4 +1,3 @@
-import Navbar from "../../components/navbar/Navbar";
 import Footer from "../../components/footer/Footer";
 import { useDocumentTitle } from "../../hooks/useDocumentTitle";
 import styles from "./Termos.module.css";
@@ -8,8 +7,6 @@ export default function Termos() {
 
   return (
     <>
-      <Navbar />
-
       <main className={styles.page}>
         <div className={styles.container}>
 
