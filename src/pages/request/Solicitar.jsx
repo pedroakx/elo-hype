@@ -9,7 +9,15 @@ import RankPicker from "../../components/rankPicker/RankPicker";
 import JornadaHeader from "../../components/rankPicker/JornadaHeader";
 import { useAuth } from "../../context/AuthContext";
 import { supabase } from "../../lib/supabaseClient";
-import { ELOS, calcularPreco, indiceDoElo, extrasDisponiveis, calcularTotalComExtras, EXTRAS } from "../../data/pricing";
+import {
+  ELOS,
+  calcularPreco,
+  indiceDoElo,
+  extrasDisponiveis,
+  calcularTotalComExtras,
+  aplicarDescontoLancamento,
+  EXTRAS
+} from "../../data/pricing";
 import { useDocumentTitle } from "../../hooks/useDocumentTitle";
 import formStyles from "../../components/authLayout/AuthForm.module.css";
 import styles from "./Solicitar.module.css";
@@ -75,10 +83,15 @@ export default function Solicitar() {
     quantidade
   }), [servico, eloAtual, eloDesejado, lpAtual, quantidade]);
 
-  const preco = useMemo(
-    () => calcularTotalComExtras(precoBase, extrasSelecionados),
-    [precoBase, extrasSelecionados]
-  );
+  const precoOriginal = useMemo(
+  () => calcularTotalComExtras(precoBase, extrasSelecionados),
+  [precoBase, extrasSelecionados]
+);
+
+const preco = useMemo(
+  () => aplicarDescontoLancamento(precoOriginal),
+  [precoOriginal]
+);
 
   const ordemValida = !USA_ELO(servico) || indiceDoElo(eloDesejado) > indiceDoElo(eloAtual);
   const precoIndisponivel = ordemValida && !preco;
@@ -285,14 +298,35 @@ export default function Solicitar() {
               />
             </div>
 
-            <div className={styles.priceBox}>
-              <span>Valor total</span>
-              <strong>
-                {preco
-                  ? preco.toLocaleString("pt-BR", { style: "currency", currency: "BRL" })
-                  : precoIndisponivel ? "Sob consulta" : "—"}
-              </strong>
-            </div>
+           <div className={styles.priceBox}>
+  <span>Valor total</span>
+
+  {precoOriginal && preco ? (
+    <>
+      <small style={{ textDecoration: "line-through", opacity: 0.5 }}>
+        {precoOriginal.toLocaleString("pt-BR", {
+          style: "currency",
+          currency: "BRL"
+        })}
+      </small>
+
+      <strong>
+        {preco.toLocaleString("pt-BR", {
+          style: "currency",
+          currency: "BRL"
+        })}
+      </strong>
+
+      <span style={{ color: "#00ff88", fontWeight: 800 }}>
+        🔥 50% OFF — Promoção de lançamento
+      </span>
+    </>
+  ) : (
+    <strong>
+      {precoIndisponivel ? "Sob consulta" : "—"}
+    </strong>
+  )}
+</div>
 
             <button
               type="submit"
