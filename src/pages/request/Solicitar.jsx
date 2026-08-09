@@ -298,33 +298,38 @@ const preco = useMemo(
               />
             </div>
 
-           <div className={styles.priceBox}>
-  <span>Valor total</span>
+          <div className={styles.priceBox}>
+  <div className={styles.priceInfo}>
+    <span>Valor total</span>
 
-  {precoOriginal && preco ? (
-    <>
-      <small style={{ textDecoration: "line-through", opacity: 0.5 }}>
-        {precoOriginal.toLocaleString("pt-BR", {
-          style: "currency",
-          currency: "BRL"
-        })}
-      </small>
+    {precoOriginal && preco ? (
+      <>
+        <small className={styles.precoOriginal}>
+          {precoOriginal.toLocaleString("pt-BR", {
+            style: "currency",
+            currency: "BRL"
+          })}
+        </small>
 
+        <strong className={styles.precoFinal}>
+          {preco.toLocaleString("pt-BR", {
+            style: "currency",
+            currency: "BRL"
+          })}
+        </strong>
+      </>
+    ) : (
       <strong>
-        {preco.toLocaleString("pt-BR", {
-          style: "currency",
-          currency: "BRL"
-        })}
+        {precoIndisponivel ? "Sob consulta" : "—"}
       </strong>
+    )}
+  </div>
 
-      <span style={{ color: "#00ff88", fontWeight: 800 }}>
-        🔥 50% OFF — Promoção de lançamento
-      </span>
-    </>
-  ) : (
-    <strong>
-      {precoIndisponivel ? "Sob consulta" : "—"}
-    </strong>
+  {precoOriginal && preco && (
+    <div className={styles.lancamentoBadge}>
+      <span>🔥 50% OFF</span>
+      <small>Promoção de lançamento</small>
+    </div>
   )}
 </div>
 

@@ -257,3 +257,49 @@
         margin-left: 36px;
     }
 }
+
+.priceInfo {
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+}
+
+.precoOriginal {
+  color: #71717A;
+  font-size: 14px;
+  text-decoration: line-through;
+}
+
+.precoFinal {
+  color: #22D3EE;
+  font-size: 26px;
+  line-height: 1.1;
+}
+
+.lancamentoBadge {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 2px;
+  padding: 8px 12px;
+  border-radius: 10px;
+  background: rgba(0, 255, 136, 0.08);
+  border: 1px solid rgba(0, 255, 136, 0.25);
+}
+
+.lancamentoBadge span {
+  color: #00ff88;
+  font-size: 13px;
+  font-weight: 800;
+}
+
+.lancamentoBadge small {
+  color: #A1A1AA;
+  font-size: 11px;
+}
+
+@media (max-width: 560px) {
+  .lancamentoBadge {
+    align-items: flex-start;
+  }
+}

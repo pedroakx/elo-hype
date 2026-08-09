@@ -210,3 +210,16 @@ export function calcularTotalComExtras(precoBase, extrasSelecionados = []) {
   const bruto = precoBase * fator + somaFixa;
   return Math.round(bruto * 100) / 100;
 }
+
+
+// ==========================================================================
+// PROMOÇÃO DE LANÇAMENTO
+// ==========================================================================
+
+export const DESCONTO_LANCAMENTO = 0.50;
+
+export function aplicarDescontoLancamento(preco) {
+  if (preco == null) return null;
+
+  return Math.round(preco * (1 - DESCONTO_LANCAMENTO) * 100) / 100;
+}
