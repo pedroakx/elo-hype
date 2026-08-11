@@ -100,3 +100,20 @@
 .esqueceuSenha:hover {
     color: #22D3EE;
 }
+
+.staffLink {
+    margin-top: 14px;
+    padding-top: 14px;
+    border-top: 1px solid rgba(255,255,255,.06);
+    color: #52525B;
+    font-size: 13px;
+}
+
+.staffLink a {
+    color: #A1A1AA;
+    font-weight: 600;
+}
+
+.staffLink a:hover {
+    color: #C4B5FD;
+}

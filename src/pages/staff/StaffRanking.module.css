@@ -74,7 +74,7 @@
 
 .row {
     display: grid;
-    grid-template-columns: 40px 1fr auto auto auto;
+    grid-template-columns: 40px 1fr auto auto;
     align-items: center;
     gap: 16px;
     padding: 16px 20px;

@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { Hand, CheckCircle2, MessageCircle } from "lucide-react";
+import { Hand, CheckCircle2, MessageCircle, Wallet } from "lucide-react";
 
 import StaffHeader from "../../components/staffHeader/StaffHeader";
 import ChatPedido from "../../components/chatPedido/ChatPedido";
@@ -89,6 +89,9 @@ export default function StaffPanel() {
   const disponiveis = pedidos.filter((p) => p.status === "pendente" && p.payment_status === "pago");
   const meus = pedidos.filter((p) => p.booster_id === user.id);
 
+  const meusConcluidos = meus.filter((p) => p.status === "concluido");
+  const saldoTotal = meusConcluidos.reduce((soma, p) => soma + (Number(p.comissao_valor) || 0), 0);
+
   function renderPedidoInfo(pedido) {
     return (
       <>
@@ -167,6 +170,21 @@ export default function StaffPanel() {
 
           {!loading && !error && (
             <>
+              <div className={styles.saldoCard}>
+                <div className={styles.saldoIcone}>
+                  <Wallet size={22} />
+                </div>
+                <div>
+                  <span className={styles.saldoLabel}>Saldo acumulado</span>
+                  <strong className={styles.saldoValor}>
+                    {saldoTotal.toLocaleString("pt-BR", { style: "currency", currency: "BRL" })}
+                  </strong>
+                </div>
+                <span className={styles.saldoInfo}>
+                  {meusConcluidos.length} pedido{meusConcluidos.length === 1 ? "" : "s"} concluído{meusConcluidos.length === 1 ? "" : "s"}
+                </span>
+              </div>
+
               <section className={styles.section}>
                 <h2>Pedidos disponíveis</h2>
                 <p className={styles.sectionSubtitle}>

@@ -18,7 +18,9 @@ export default function Login() {
   const [error, setError] = useState(null);
   const [loading, setLoading] = useState(false);
 
-  const from = location.state?.from?.pathname || "/dashboard";
+  const from = location.state?.from?.pathname
+    ? `${location.state.from.pathname}${location.state.from.search || ""}`
+    : "/dashboard";
 
   async function handleSubmit(e) {
     e.preventDefault();
@@ -49,7 +51,10 @@ export default function Login() {
       subtitle="Acompanhe seus pedidos no seu dashboard"
       footer={
         <>
-          Ainda não tem conta? <Link to="/cadastro">Criar conta</Link>
+          Ainda não tem conta? <Link to="/cadastro" state={{ from: location.state?.from }}>Criar conta</Link>
+          <div className={formStyles.staffLink}>
+            É da equipe? <Link to="/equipe/entrar">Entrar como booster/admin</Link>
+          </div>
         </>
       }
     >

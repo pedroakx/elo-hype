@@ -1,8 +1,7 @@
 import { useMemo, useState } from "react";
-import { useSearchParams } from "react-router-dom";
+import { useSearchParams, useNavigate, useLocation } from "react-router-dom";
 import { motion } from "framer-motion";
 import { Send, Check } from "lucide-react";
-
 
 import Footer from "../../components/footer/Footer";
 import RankPicker from "../../components/rankPicker/RankPicker";
@@ -32,23 +31,46 @@ const SERVICOS = [
 const USA_ELO = (servico) => servico === "elo-boost" || servico === "duo-boost";
 const USA_QUANTIDADE = (servico) => servico === "coaching" || servico === "placement";
 
+const CHAVE_RASCUNHO = "elohype:pedido-rascunho";
+
+function lerRascunho() {
+  try {
+    const bruto = sessionStorage.getItem(CHAVE_RASCUNHO);
+    return bruto ? JSON.parse(bruto) : null;
+  } catch {
+    return null;
+  }
+}
+
 export default function Solicitar() {
   useDocumentTitle("Solicitar serviço");
 
   const { user } = useAuth();
+  const navigate = useNavigate();
+  const location = useLocation();
   const [searchParams] = useSearchParams();
 
-  const servicoInicial = SERVICOS.some(s => s.value === searchParams.get("servico"))
-    ? searchParams.get("servico")
-    : "elo-boost";
+  // Se a pessoa preencheu o formulário, foi mandada pra criar conta/entrar
+  // e voltou, restaura tudo o que ela já tinha escolhido
+  const [rascunho] = useState(() => {
+    const salvo = lerRascunho();
+    if (salvo) sessionStorage.removeItem(CHAVE_RASCUNHO);
+    return salvo;
+  });
+
+  const servicoInicial = rascunho?.servico
+    ? rascunho.servico
+    : SERVICOS.some(s => s.value === searchParams.get("servico"))
+      ? searchParams.get("servico")
+      : "elo-boost";
 
   const [servico, setServico] = useState(servicoInicial);
-  const [eloAtual, setEloAtual] = useState(ELOS[0]);
-  const [eloDesejado, setEloDesejado] = useState(ELOS[1]);
-  const [lpAtual, setLpAtual] = useState(0);
-  const [quantidade, setQuantidade] = useState(5);
-  const [observacoes, setObservacoes] = useState("");
-  const [extrasSelecionados, setExtrasSelecionados] = useState([]);
+  const [eloAtual, setEloAtual] = useState(rascunho?.eloAtual || ELOS[0]);
+  const [eloDesejado, setEloDesejado] = useState(rascunho?.eloDesejado || ELOS[1]);
+  const [lpAtual, setLpAtual] = useState(rascunho?.lpAtual ?? 0);
+  const [quantidade, setQuantidade] = useState(rascunho?.quantidade ?? 5);
+  const [observacoes, setObservacoes] = useState(rascunho?.observacoes || "");
+  const [extrasSelecionados, setExtrasSelecionados] = useState(rascunho?.extrasSelecionados || []);
   const [error, setError] = useState(null);
   const [loading, setLoading] = useState(false);
 
@@ -84,14 +106,14 @@ export default function Solicitar() {
   }), [servico, eloAtual, eloDesejado, lpAtual, quantidade]);
 
   const precoOriginal = useMemo(
-  () => calcularTotalComExtras(precoBase, extrasSelecionados),
-  [precoBase, extrasSelecionados]
-);
+    () => calcularTotalComExtras(precoBase, extrasSelecionados),
+    [precoBase, extrasSelecionados]
+  );
 
-const preco = useMemo(
-  () => aplicarDescontoLancamento(precoOriginal),
-  [precoOriginal]
-);
+  const preco = useMemo(
+    () => aplicarDescontoLancamento(precoOriginal),
+    [precoOriginal]
+  );
 
   const ordemValida = !USA_ELO(servico) || indiceDoElo(eloDesejado) > indiceDoElo(eloAtual);
   const precoIndisponivel = ordemValida && !preco;
@@ -113,10 +135,21 @@ const preco = useMemo(
 
     setLoading(true);
 
+    // Ainda não tem conta? Salva o que já foi preenchido e manda criar
+    // conta primeiro — ao voltar, o formulário é restaurado automaticamente.
+    if (!user) {
+      sessionStorage.setItem(CHAVE_RASCUNHO, JSON.stringify({
+        servico, eloAtual, eloDesejado, lpAtual, quantidade, observacoes, extrasSelecionados
+      }));
+
+      navigate("/cadastro", { state: { from: location } });
+      return;
+    }
+
     // 1. Cria o pedido como "pendente" — o preço enviado aqui é só uma
-    //    referência: o banco recalcula (base + extras) e substitui esse
-    //    valor no servidor, então não tem como manipular o preço alterando
-    //    essa requisição.
+    //    referência: o banco recalcula (base + extras + desconto de
+    //    lançamento) e substitui esse valor no servidor, então não tem
+    //    como manipular o preço alterando essa requisição.
     const { data: pedido, error: insertError } = await supabase
       .from("pedidos")
       .insert({
@@ -173,8 +206,6 @@ const preco = useMemo(
 
   return (
     <>
-   
-
       <main className={styles.page}>
 
         <div className={styles.backgroundGlow}></div>
@@ -189,6 +220,11 @@ const preco = useMemo(
             <span className={styles.badge}>Solicitação</span>
             <h1>Vamos começar seu pedido</h1>
             <p>Preencha os dados abaixo, confira o valor e finalize o pagamento.</p>
+            {!user && (
+              <p className={styles.avisoConta}>
+                Você pode simular o preço à vontade — só vamos pedir uma conta rápida na hora de pagar.
+              </p>
+            )}
           </motion.div>
 
           <motion.form
@@ -298,47 +334,51 @@ const preco = useMemo(
               />
             </div>
 
-          <div className={styles.priceBox}>
-  <div className={styles.priceInfo}>
-    <span>Valor total</span>
+            <div className={styles.priceBox}>
+              <div className={styles.priceInfo}>
+                <span>Valor total</span>
 
-    {precoOriginal && preco ? (
-      <>
-        <small className={styles.precoOriginal}>
-          {precoOriginal.toLocaleString("pt-BR", {
-            style: "currency",
-            currency: "BRL"
-          })}
-        </small>
+                {precoOriginal && preco ? (
+                  <>
+                    <small className={styles.precoOriginal}>
+                      {precoOriginal.toLocaleString("pt-BR", {
+                        style: "currency",
+                        currency: "BRL"
+                      })}
+                    </small>
 
-        <strong className={styles.precoFinal}>
-          {preco.toLocaleString("pt-BR", {
-            style: "currency",
-            currency: "BRL"
-          })}
-        </strong>
-      </>
-    ) : (
-      <strong>
-        {precoIndisponivel ? "Sob consulta" : "—"}
-      </strong>
-    )}
-  </div>
+                    <strong className={styles.precoFinal}>
+                      {preco.toLocaleString("pt-BR", {
+                        style: "currency",
+                        currency: "BRL"
+                      })}
+                    </strong>
+                  </>
+                ) : (
+                  <strong>
+                    {precoIndisponivel ? "Sob consulta" : "—"}
+                  </strong>
+                )}
+              </div>
 
-  {precoOriginal && preco && (
-    <div className={styles.lancamentoBadge}>
-      <span>🔥 50% OFF</span>
-      <small>Promoção de lançamento</small>
-    </div>
-  )}
-</div>
+              {precoOriginal && preco && (
+                <div className={styles.lancamentoBadge}>
+                  <span>🔥 50% OFF</span>
+                  <small>Promoção de lançamento</small>
+                </div>
+              )}
+            </div>
 
             <button
               type="submit"
               className={formStyles.submit}
               disabled={loading || !preco}
             >
-              {loading ? "Redirecionando..." : "Pagar e enviar solicitação"}
+              {loading
+                ? "Redirecionando..."
+                : user
+                  ? "Pagar e enviar solicitação"
+                  : "Continuar e criar conta"}
               <Send size={18} />
             </button>
 

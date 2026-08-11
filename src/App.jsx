@@ -115,14 +115,7 @@ function App() {
             />
 
 
-            <Route
-              path="/solicitar"
-              element={
-                <ProtectedRoute>
-                  <Solicitar />
-                </ProtectedRoute>
-              }
-            />
+            <Route path="/solicitar" element={<Solicitar />} />
 
 
             <Route

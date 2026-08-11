@@ -90,8 +90,6 @@ export default function StaffRanking() {
                   <span className={styles.nivel}>Nível {booster.nivel}</span>
 
                   <span className={styles.pedidos}>{booster.pedidos_concluidos} pedidos</span>
-
-                  <span className={styles.comissao}>{booster.percentual_comissao}%</span>
                 </div>
               ))}
             </div>

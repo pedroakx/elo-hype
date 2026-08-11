@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { useNavigate, Link } from "react-router-dom";
+import { useNavigate, useLocation, Link } from "react-router-dom";
 import { UserPlus } from "lucide-react";
 
 import AuthLayout from "../../components/authLayout/AuthLayout";
@@ -11,6 +11,11 @@ export default function Cadastro() {
   useDocumentTitle("Criar conta");
   const { signUp } = useAuth();
   const navigate = useNavigate();
+  const location = useLocation();
+
+  const from = location.state?.from?.pathname
+    ? `${location.state.from.pathname}${location.state.from.search || ""}`
+    : "/dashboard";
 
   const [nome, setNome] = useState("");
   const [email, setEmail] = useState("");
@@ -44,9 +49,9 @@ export default function Cadastro() {
     }
 
     // Se a confirmação de e-mail estiver desativada no Supabase,
-    // já existe uma sessão ativa e o usuário pode ir direto ao dashboard.
+    // já existe uma sessão ativa e o usuário pode ir direto pra onde estava.
     if (data.session) {
-      navigate("/dashboard", { replace: true });
+      navigate(from, { replace: true });
       return;
     }
 
@@ -59,7 +64,12 @@ export default function Cadastro() {
         title="Quase lá!"
         subtitle="Enviamos um link de confirmação para o seu e-mail. Confirme para acessar seu dashboard."
       >
-        <Link to="/entrar" className={formStyles.submit} style={{ marginTop: 28 }}>
+        <Link
+          to="/entrar"
+          state={{ from: location.state?.from }}
+          className={formStyles.submit}
+          style={{ marginTop: 28 }}
+        >
           Ir para o login
         </Link>
       </AuthLayout>
@@ -72,7 +82,7 @@ export default function Cadastro() {
       subtitle="Acompanhe seus pedidos em um só lugar"
       footer={
         <>
-          Já tem conta? <Link to="/entrar">Entrar</Link>
+          Já tem conta? <Link to="/entrar" state={{ from: location.state?.from }}>Entrar</Link>
         </>
       }
     >

@@ -27,6 +27,17 @@ No painel do Supabase → **SQL Editor**, rode os arquivos de `supabase/*.sql`
 8. `supabase/booster-profile-schema.sql` — perfil do booster (nickname,
    Discord, nick do LoL, elo peak, foto)
 9. `supabase/extras-schema.sql` — serviços extras (add-ons) no pedido
+10. `supabase/fix-rls-recursion.sql` — corrige recursão infinita nas
+    políticas de segurança de `profiles`
+11. `supabase/pricing-v2-schema.sql` — tabela de preços por divisão + LP
+    atual (substitui o cálculo antigo por tier inteiro)
+12. `supabase/promo-schema.sql` — aplica a promoção de lançamento (50%
+    OFF) também no valor cobrado de verdade, não só na tela
+13. `supabase/hide-ranking-commission-schema.sql` — esconde a % de
+    comissão de outros boosters no ranking público
+14. `supabase/allow-profile-update-schema.sql` — libera o booster
+    salvar o próprio perfil (nickname, Discord, nick do LoL, elo peak,
+    foto) — sem isso, nada nessa tela era salvo
 
 Todos são seguros pra rodar mais de uma vez (não duplicam dados).
 
