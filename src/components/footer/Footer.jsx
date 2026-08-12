@@ -43,7 +43,7 @@ export default function Footer() {
           <div className={styles.column}>
             <h4>Contato</h4>
             <a href="mailto:elohypeinc@gmail.com">elohypeinc@gmail.com</a>
-            <a href="https://discord.gg/mAmrt3XSBN" target="_blank" rel="noopener noreferrer">Discord</a>
+            <a href="https://discord.gg/vsGpwDy25s" target="_blank" rel="noopener noreferrer">Discord</a>
             <Link to="/termos">Termos de Uso e Privacidade</Link>
           </div>
 
