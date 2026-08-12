@@ -160,7 +160,7 @@ export default function Cadastro() {
             required
           />
         </div>
-
+                console.log("HCAPTCHA SITE KEY:", import.meta.env.VITE_HCAPTCHA_SITE_KEY);
         <div
           style={{
             display: "flex",
@@ -168,6 +168,7 @@ export default function Cadastro() {
             margin: "20px 0"
           }}
         >
+          
           <HCaptcha
             ref={captchaRef}
             sitekey={import.meta.env.VITE_HCAPTCHA_SITE_KEY}
