@@ -52,6 +52,11 @@ export default function Cadastro() {
       captchaToken
     });
 
+    console.log("SIGNUP RESULT:", {
+  data,
+  error
+});
+
     setLoading(false);
 
     // O token do hCaptcha é de uso único.
@@ -160,7 +165,7 @@ export default function Cadastro() {
             required
           />
         </div>
-                console.log("HCAPTCHA SITE KEY:", import.meta.env.VITE_HCAPTCHA_SITE_KEY);
+              
         <div
           style={{
             display: "flex",

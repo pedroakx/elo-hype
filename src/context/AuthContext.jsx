@@ -11,15 +11,20 @@ export function AuthProvider({ children }) {
   useEffect(() => {
     supabase.auth.getSession().then(async ({ data: { session } }) => {
       setSession(session);
+
       if (session?.user) {
         await loadProfile(session.user.id);
       }
+
       setLoading(false);
     });
 
-    const { data: { subscription } } = supabase.auth.onAuthStateChange(
+    const {
+      data: { subscription }
+    } = supabase.auth.onAuthStateChange(
       async (_event, session) => {
         setSession(session);
+
         if (session?.user) {
           await loadProfile(session.user.id);
         } else {
@@ -31,37 +36,50 @@ export function AuthProvider({ children }) {
     return () => subscription.unsubscribe();
   }, []);
 
- async function loadProfile(userId) {
-  const { data, error } = await supabase
-    .from("profiles")
-    .select("*")
-    .eq("id", userId)
-    .single();
+  async function loadProfile(userId) {
+    const { data, error } = await supabase
+      .from("profiles")
+      .select("*")
+      .eq("id", userId)
+      .single();
 
-  console.log("LOAD PROFILE:", {
-    data,
-    error
-  });
-
-  setProfile(data ?? null);
-}
-
-  async function signUp({ email, password, nome }) {
-    const { data, error } = await supabase.auth.signUp({
-      email,
-      password,
-      options: {
-        data: { nome }
-      }
+    console.log("LOAD PROFILE:", {
+      data,
+      error
     });
-    return { data, error };
+
+    setProfile(data ?? null);
   }
+
+  async function signUp({ email, password, nome, captchaToken }) {
+  console.log("SIGNUP CAPTCHA TOKEN:", captchaToken);
+
+  const payload = {
+    email,
+    password,
+    options: {
+      captchaToken,
+      data: {
+        nome
+      }
+    }
+  };
+
+  console.log("SIGNUP PAYLOAD:", payload);
+
+  const { data, error } = await supabase.auth.signUp(payload);
+
+  console.log("SIGNUP RESPONSE:", { data, error });
+
+  return { data, error };
+}
 
   async function signIn({ email, password }) {
     const { data, error } = await supabase.auth.signInWithPassword({
       email,
       password
     });
+
     return { data, error };
   }
 
@@ -78,7 +96,8 @@ export function AuthProvider({ children }) {
     signUp,
     signIn,
     signOut,
-    refreshProfile: () => session?.user && loadProfile(session.user.id)
+    refreshProfile: () =>
+      session?.user && loadProfile(session.user.id)
   };
 
   return (
@@ -90,8 +109,10 @@ export function AuthProvider({ children }) {
 
 export function useAuth() {
   const context = useContext(AuthContext);
+
   if (!context) {
     throw new Error("useAuth precisa ser usado dentro de um AuthProvider");
   }
+
   return context;
 }
