@@ -1,5 +1,6 @@
-import { useState } from "react";
+import { useRef, useState } from "react";
 import { useNavigate, useLocation, Link } from "react-router-dom";
+import HCaptcha from "@hcaptcha/react-hcaptcha";
 import { UserPlus } from "lucide-react";
 
 import AuthLayout from "../../components/authLayout/AuthLayout";
@@ -9,9 +10,12 @@ import formStyles from "../../components/authLayout/AuthForm.module.css";
 
 export default function Cadastro() {
   useDocumentTitle("Criar conta");
+
   const { signUp } = useAuth();
   const navigate = useNavigate();
   const location = useLocation();
+
+  const captchaRef = useRef(null);
 
   const from = location.state?.from?.pathname
     ? `${location.state.from.pathname}${location.state.from.search || ""}`
@@ -20,6 +24,7 @@ export default function Cadastro() {
   const [nome, setNome] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [captchaToken, setCaptchaToken] = useState("");
   const [error, setError] = useState(null);
   const [loading, setLoading] = useState(false);
   const [success, setSuccess] = useState(false);
@@ -33,11 +38,26 @@ export default function Cadastro() {
       return;
     }
 
+    if (!captchaToken) {
+      setError("Complete o CAPTCHA para continuar.");
+      return;
+    }
+
     setLoading(true);
 
-    const { data, error } = await signUp({ email, password, nome });
+    const { data, error } = await signUp({
+      email,
+      password,
+      nome,
+      captchaToken
+    });
 
     setLoading(false);
+
+    // O token do hCaptcha é de uso único.
+    // Resetamos o desafio após cada tentativa.
+    captchaRef.current?.resetCaptcha();
+    setCaptchaToken("");
 
     if (error) {
       setError(
@@ -48,8 +68,8 @@ export default function Cadastro() {
       return;
     }
 
-    // Se a confirmação de e-mail estiver desativada no Supabase,
-    // já existe uma sessão ativa e o usuário pode ir direto pra onde estava.
+    // Com "Confirm email" ativado no Supabase,
+    // normalmente data.session será null.
     if (data.session) {
       navigate(from, { replace: true });
       return;
@@ -82,16 +102,29 @@ export default function Cadastro() {
       subtitle="Acompanhe seus pedidos em um só lugar"
       footer={
         <>
-          Já tem conta? <Link to="/entrar" state={{ from: location.state?.from }}>Entrar</Link>
+          Já tem conta?{" "}
+          <Link
+            to="/entrar"
+            state={{ from: location.state?.from }}
+          >
+            Entrar
+          </Link>
         </>
       }
     >
-      <form className={formStyles.form} onSubmit={handleSubmit}>
-
-        {error && <div className={formStyles.error}>{error}</div>}
+      <form
+        className={formStyles.form}
+        onSubmit={handleSubmit}
+      >
+        {error && (
+          <div className={formStyles.error}>
+            {error}
+          </div>
+        )}
 
         <div className={formStyles.field}>
           <label htmlFor="nome">Nome</label>
+
           <input
             id="nome"
             type="text"
@@ -104,6 +137,7 @@ export default function Cadastro() {
 
         <div className={formStyles.field}>
           <label htmlFor="email">E-mail</label>
+
           <input
             id="email"
             type="email"
@@ -116,6 +150,7 @@ export default function Cadastro() {
 
         <div className={formStyles.field}>
           <label htmlFor="password">Senha</label>
+
           <input
             id="password"
             type="password"
@@ -126,10 +161,33 @@ export default function Cadastro() {
           />
         </div>
 
+        <div
+          style={{
+            display: "flex",
+            justifyContent: "center",
+            margin: "20px 0"
+          }}
+        >
+          <HCaptcha
+            ref={captchaRef}
+            sitekey={import.meta.env.VITE_HCAPTCHA_SITE_KEY}
+            onVerify={(token) => {
+              setCaptchaToken(token);
+            }}
+            onExpire={() => {
+              setCaptchaToken("");
+            }}
+            onError={() => {
+              setCaptchaToken("");
+              setError("Não foi possível validar o CAPTCHA. Tente novamente.");
+            }}
+          />
+        </div>
+
         <button
           type="submit"
           className={formStyles.submit}
-          disabled={loading}
+          disabled={loading || !captchaToken}
         >
           {loading ? "Criando conta..." : "Criar conta"}
           <UserPlus size={18} />
@@ -137,9 +195,11 @@ export default function Cadastro() {
 
         <p className={formStyles.termos}>
           Ao criar sua conta, você concorda com nossos{" "}
-          <Link to="/termos">Termos de Uso e Privacidade</Link>.
+          <Link to="/termos">
+            Termos de Uso e Privacidade
+          </Link>
+          .
         </p>
-
       </form>
     </AuthLayout>
   );
